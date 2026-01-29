@@ -103,7 +103,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
             path,
             require,
             serviceEdit,
-            createRequireTextEdit(name, require, lineNumber, prependNewline),
+            createRequireTextEdit(toCamelCase(name), require, lineNumber, prependNewline),
             isRelative ? SortText::AutoImports : SortText::AutoImportsAbsolute,
         });
     }
