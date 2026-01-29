@@ -6,10 +6,18 @@
 namespace Luau::LanguageServer::AutoImports
 {
 
+std::string toCamelCase(std::string s)
+{
+    if (!s.empty())
+        s[0] = static_cast<char>(std::tolower(s[0]));
+    return s;
+}
+
 lsp::TextEdit createServiceTextEdit(const std::string& name, size_t lineNumber, bool appendNewline)
 {
     auto range = lsp::Range{{lineNumber, 0}, {lineNumber, 0}};
-    auto importText = "local " + name + " = game:GetService(\"" + name + "\")\n";
+    std::string variableName = toCamelCase(name);
+    auto importText = "local " + variableName + " = game:GetService(\"" + name + "\")\n";
     if (appendNewline)
         importText += "\n";
     return {range, importText};
