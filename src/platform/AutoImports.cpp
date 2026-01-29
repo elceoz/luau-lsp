@@ -107,7 +107,7 @@ lsp::CompletionItem createSuggestRequire(const std::string& name, const std::vec
     item.kind = lsp::CompletionItemKind::Module;
     item.detail = requirePath;
     item.documentation = {lsp::MarkupKind::Markdown, codeBlock("luau", documentation) + "\n\n" + path};
-    item.insertText = name;
+    item.insertText = toCamelCase(name);
     item.sortText = sortText;
 
     item.additionalTextEdits = textEdits;
