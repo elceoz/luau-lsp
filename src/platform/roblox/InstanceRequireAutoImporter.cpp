@@ -99,7 +99,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
         bool prependNewline = ctx.config->separateGroupsWithLine && ctx.importsVisitor->shouldPrependNewline(lineNumber);
 
         results.emplace_back(InstanceRequireResult{
-            name,
+            toCamelCase(name),
             path,
             require,
             serviceEdit,
