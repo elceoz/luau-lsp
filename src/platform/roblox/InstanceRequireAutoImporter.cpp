@@ -120,7 +120,7 @@ void suggestInstanceRequires(const InstanceRequireAutoImporterContext& ctx, std:
         if (serviceEdit)
             edits.emplace_back(serviceEdit->second);
         edits.emplace_back(edit);
-        items.emplace_back(createSuggestRequire(variableName, edits, sortText, moduleName, requirePath));
+        items.emplace_back(createSuggestRequire(toCamelCase(variableName), edits, sortText, moduleName, requirePath));
     }
 }
 
