@@ -91,7 +91,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
                 // so we use `.value_or(serviceLineNumber)` to ensure it equals 0 and a newline is added
                 if (ctx.config->separateGroupsWithLine && ctx.importsVisitor->firstRequireLine.value_or(serviceLineNumber) - serviceLineNumber == 0)
                     appendNewline = true;
-                serviceEdit = {service, createServiceTextEdit(service, serviceLineNumber, appendNewline)};
+                serviceEdit = {service, createServiceTextEdit(toCamelCase(service), serviceLineNumber, appendNewline)};
             }
         }
 
