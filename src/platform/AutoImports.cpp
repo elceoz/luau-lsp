@@ -77,10 +77,18 @@ std::string makeValidVariableName(std::string name)
     return name;
 }
 
+std::string toCamelCase(std::string s)
+{
+    if (!s.empty())
+        s[0] = static_cast<char>(std::tolower(s[0]));
+    return s;
+}
+
 lsp::TextEdit createRequireTextEdit(const std::string& name, const std::string& path, size_t lineNumber, bool prependNewline)
 {
     auto range = lsp::Range{{lineNumber, 0}, {lineNumber, 0}};
-    auto importText = "local " + name + " = require(" + path + ")\n";
+    std::string variableName = toCamelCase(name);
+    auto importText = "local " + variableName + " = require(" + path + ")\n";
     if (prependNewline)
         importText = "\n" + importText;
     return {range, importText};
