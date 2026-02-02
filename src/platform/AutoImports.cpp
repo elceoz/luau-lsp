@@ -88,7 +88,8 @@ lsp::TextEdit createRequireTextEdit(const std::string& name, const std::string& 
 {
     auto range = lsp::Range{{lineNumber, 0}, {lineNumber, 0}};
     std::string variableName = toCamelCase(name);
-    auto importText = "local " + variableName + " = require(" + path + ")\n";
+    std::string camelCasePath = toCamelCase(path);
+    auto importText = "local " + variableName + " = require(" + camelCasePath + ")\n";
     if (prependNewline)
         importText = "\n" + importText;
     return {range, importText};

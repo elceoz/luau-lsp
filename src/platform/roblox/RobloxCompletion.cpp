@@ -49,6 +49,13 @@ static constexpr const char* COMMON_SERVICE_PROVIDER_PROPERTIES[] = {
     "GetService",
 };
 
+inline std::string toCamelCase(std::string s)
+{
+    if (!s.empty())
+        s[0] = static_cast<char>(std::tolower(s[0]));
+    return s;
+}
+
 static lsp::CompletionItem createSuggestService(const std::string& service, size_t lineNumber, bool appendNewline = false)
 {
     auto textEdit = Luau::LanguageServer::AutoImports::createServiceTextEdit(service, lineNumber, appendNewline);
@@ -58,7 +65,7 @@ static lsp::CompletionItem createSuggestService(const std::string& service, size
     item.kind = lsp::CompletionItemKind::Class;
     item.detail = "Auto-import";
     item.documentation = {lsp::MarkupKind::Markdown, codeBlock("luau", textEdit.newText)};
-    item.insertText = service;
+    item.insertText = toCamelCase(service);
     item.sortText = SortText::AutoImports;
 
     item.additionalTextEdits.emplace_back(textEdit);

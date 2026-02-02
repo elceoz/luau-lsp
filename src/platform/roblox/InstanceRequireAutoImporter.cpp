@@ -91,7 +91,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
                 // so we use `.value_or(serviceLineNumber)` to ensure it equals 0 and a newline is added
                 if (ctx.config->separateGroupsWithLine && ctx.importsVisitor->firstRequireLine.value_or(serviceLineNumber) - serviceLineNumber == 0)
                     appendNewline = true;
-                serviceEdit = {service, createServiceTextEdit(toCamelCase(service), serviceLineNumber, appendNewline)};
+                serviceEdit = {service, createServiceTextEdit(service, serviceLineNumber, appendNewline)};
             }
         }
 
@@ -99,11 +99,11 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
         bool prependNewline = ctx.config->separateGroupsWithLine && ctx.importsVisitor->shouldPrependNewline(lineNumber);
 
         results.emplace_back(InstanceRequireResult{
-            toCamelCase(name),
+            name,
             path,
             require,
             serviceEdit,
-            createRequireTextEdit(toCamelCase(name), require, lineNumber, prependNewline),
+            createRequireTextEdit(name, require, lineNumber, prependNewline),
             isRelative ? SortText::AutoImports : SortText::AutoImportsAbsolute,
         });
     }
@@ -120,7 +120,7 @@ void suggestInstanceRequires(const InstanceRequireAutoImporterContext& ctx, std:
         if (serviceEdit)
             edits.emplace_back(serviceEdit->second);
         edits.emplace_back(edit);
-        items.emplace_back(createSuggestRequire(toCamelCase(variableName), edits, sortText, moduleName, requirePath));
+        items.emplace_back(createSuggestRequire(variableName, edits, sortText, moduleName, requirePath));
     }
 }
 
