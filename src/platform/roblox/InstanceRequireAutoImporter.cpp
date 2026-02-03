@@ -6,7 +6,7 @@
 namespace Luau::LanguageServer::AutoImports
 {
 
-std::string toCamelCase(std::string s)
+inline std::string toCamelCase(std::string s)
 {
     if (!s.empty())
         s[0] = static_cast<char>(std::tolower(s[0]));
