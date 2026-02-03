@@ -86,7 +86,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
             auto serviceVarName = toCamelCase(serviceClassName);
             if (!contains(ctx.importsVisitor->serviceLineMap, serviceVarName))
             {
-                auto serviceLineNumber = ctx.importsVisitor->findBestLineForService(service, ctx.hotCommentsLineNumber);
+                auto serviceLineNumber = ctx.importsVisitor->findBestLineForService(serviceVarName, ctx.hotCommentsLineNumber);
                 bool appendNewline = false;
                 // If there is no firstRequireLine, then the require that we insert will become the first require,
                 // so we use `.value_or(serviceLineNumber)` to ensure it equals 0 and a newline is added
