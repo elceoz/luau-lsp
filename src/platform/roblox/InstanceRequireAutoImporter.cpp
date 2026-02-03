@@ -82,8 +82,9 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
         {
             // Service will be the first part of the path
             // If we haven't imported the service already, then we auto-import it
-            auto service = requirePath.substr(0, requirePath.find('/'));
-            if (!contains(ctx.importsVisitor->serviceLineMap, service))
+            auto serviceClassName = requirePath.substr(0, requirePath.find('/'));
+            auto serviceVarName = toCamelCase(serviceClassName);
+            if (!contains(ctx.importsVisitor->serviceLineMap, serviceVarName))
             {
                 auto serviceLineNumber = ctx.importsVisitor->findBestLineForService(service, ctx.hotCommentsLineNumber);
                 bool appendNewline = false;
@@ -91,7 +92,7 @@ std::vector<InstanceRequireResult> computeAllInstanceRequires(const InstanceRequ
                 // so we use `.value_or(serviceLineNumber)` to ensure it equals 0 and a newline is added
                 if (ctx.config->separateGroupsWithLine && ctx.importsVisitor->firstRequireLine.value_or(serviceLineNumber) - serviceLineNumber == 0)
                     appendNewline = true;
-                serviceEdit = {service, createServiceTextEdit(service, serviceLineNumber, appendNewline)};
+                serviceEdit = {serviceVarName, createServiceTextEdit(serviceClassName, serviceLineNumber, appendNewline)};
             }
         }
 
